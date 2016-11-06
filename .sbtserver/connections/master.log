@@ -1,0 +1,28 @@
+New log file opened at Sat Nov 05 12:41:10 CET 2016 by 9268@DESKTOP-IBPII44
+Taking next connection to: 3057
+New client attempting to connect on port: 3058-3057
+  Address = /127.0.0.1:3057
+This client on port 3058 has uuid 4b5e97f2-1c9d-460f-8fd9-d61706ad72a7 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-4b5e97f2-1c9d-460f-8fd9-d61706ad72a7
+Taking next connection to: 3057
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 3057
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 3057
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 3057
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 3057
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 3057
+Checking to see if clients are empty...
+No non-daemon clients connected after 3 min. Shutting down.
+Server socket thread exiting.
+0 clients open, will close them...
+All client sockets have been closed.
+Closing the 9268@DESKTOP-IBPII44 logs at Sat Nov 05 12:59:10 CET 2016, goodbye.
