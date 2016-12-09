@@ -13,5 +13,8 @@ GET     /message                    controllers.AsyncController.message
 
 GET		/markers					controllers.MarkerController.markers
 
+GET		/structures					controllers.StructureController.structures
+GET		/structures/marker/:markerId		controllers.StructureController.structureForMarker(markerId: Integer)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
