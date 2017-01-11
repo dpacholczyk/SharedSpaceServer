@@ -16,5 +16,9 @@ GET		/markers					controllers.MarkerController.markers
 GET		/structures					controllers.StructureController.structures
 GET		/structures/marker/:markerId		controllers.StructureController.structureForMarker(markerId: Integer)
 
+POST	/sessions/create			controllers.SessionController.create
+GET		/sessions/join/:userId/:sessionId				controllers.SessionController.join(userId: Long, sessionId: Long)
+GET		/sessions/get/:sessionId	controllers.SessionController.get(sessionId: Long)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
