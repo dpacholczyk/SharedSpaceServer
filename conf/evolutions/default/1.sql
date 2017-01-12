@@ -20,8 +20,10 @@ create table session (
 
 create table session_user (
   id                            bigint auto_increment not null,
+  user_id                       bigint,
   is_host                       tinyint(1) default 0,
   session_id                    bigint,
+  constraint uq_session_user_user_id unique (user_id),
   constraint pk_session_user primary key (id)
 );
 
@@ -48,6 +50,8 @@ create table user (
 
 alter table marker add constraint fk_marker_structure_id foreign key (structure_id) references structure (id) on delete restrict on update restrict;
 
+alter table session_user add constraint fk_session_user_user_id foreign key (user_id) references user (id) on delete restrict on update restrict;
+
 alter table session_user add constraint fk_session_user_session_id foreign key (session_id) references session (id) on delete restrict on update restrict;
 create index ix_session_user_session_id on session_user (session_id);
 
@@ -57,6 +61,8 @@ alter table structure add constraint fk_structure_marker_id foreign key (marker_
 # --- !Downs
 
 alter table marker drop foreign key fk_marker_structure_id;
+
+alter table session_user drop foreign key fk_session_user_user_id;
 
 alter table session_user drop foreign key fk_session_user_session_id;
 drop index ix_session_user_session_id on session_user;
