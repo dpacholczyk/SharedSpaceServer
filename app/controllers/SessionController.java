@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import models.Session;
 import models.SessionUser;
 import models.User;
@@ -54,6 +56,13 @@ public class SessionController extends Controller {
 		Session session = Session.find.byId(sessionId);
 		
 		return ok(Json.toJson(session));
+	}
+	
+	public Result getUsers(Long sessionId) {
+		Session session = Session.find.byId(sessionId);
+		List<SessionUser> users = session.users;
+		
+		return ok(Json.toJson(users));
 	}
 	
 	public Result join(Long userId, Long sessionId) {
