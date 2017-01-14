@@ -10,8 +10,22 @@ import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.creator;
 
 public class SessionController extends Controller {
+	
+	public Result creator() {
+		
+		return ok(creator.render());
+	}
+	
+	public Result newSession() {
+		return ok();
+	}
+	
+	public Result test() {
+		return ok("test");
+	}
 	
 	public Result create() {
 		 DynamicForm form = Form.form().bindFromRequest();
@@ -20,6 +34,7 @@ public class SessionController extends Controller {
 			 return badRequest("Expceting some data");
 		 } else {
 			 String deviceId = form.get("DeviceId");
+			 String sessionName = form.get("SessionName");
 			 
 			 User user = User.findByDeviceId(deviceId);
 			 if(user == null) {
@@ -35,6 +50,7 @@ public class SessionController extends Controller {
 			 
 			 
 			 Session session = new Session();
+			 session.name = sessionName;
 //			 session.users.add(host);
 			 session.save();
 

@@ -15,6 +15,7 @@ create table marker (
 
 create table session (
   id                            bigint auto_increment not null,
+  name                          varchar(255),
   constraint pk_session primary key (id)
 );
 

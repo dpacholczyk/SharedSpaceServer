@@ -16,6 +16,8 @@ public class Session extends Model {
 	@Id
 	public Long id;
 	
+	public String name;
+	
 	@OneToMany
 	public List<SessionUser> users;
 	
