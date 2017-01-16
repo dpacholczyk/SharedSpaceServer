@@ -1,9 +1,12 @@
 package controllers;
 
 import java.util.List;
+import java.util.Map;
 
+import models.Marker;
 import models.Session;
 import models.SessionUser;
+import models.Structure;
 import models.User;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -16,7 +19,7 @@ public class SessionController extends Controller {
 	
 	public Result creator() {
 		
-		return ok(creator.render());
+		return ok(views.html.creator.render());
 	}
 	
 	public Result newSession() {
@@ -35,6 +38,10 @@ public class SessionController extends Controller {
 		 } else {
 			 String deviceId = form.get("DeviceId");
 			 String sessionName = form.get("SessionName");
+			 int elementsCount = Integer.parseInt(form.get("ElementsCount"));
+			 
+			 System.out.println("DeviceId: " + deviceId);
+			 System.out.println("SessionName: " + sessionName);
 			 
 			 User user = User.findByDeviceId(deviceId);
 			 if(user == null) {
@@ -47,8 +54,6 @@ public class SessionController extends Controller {
 				 System.out.println("ISTNIEJE: " + user.deviceId);
 			 }
 			 
-			 
-			 
 			 Session session = new Session();
 			 session.name = sessionName;
 //			 session.users.add(host);
@@ -60,11 +65,58 @@ public class SessionController extends Controller {
 			 host.session = session;
 			 host.save();
 			 System.out.println("ISTNIEJE: " + host.id + " " + host.user.name + " " + host.user.deviceId);
+
+			 if(elementsCount > 0) {
+				 for(int i = 1; i <= elementsCount; i++) {
+					 String patternNameKey = "PatternName_" + i;
+					 String objectDefinitionKey = "ObjectDefinition_" + i;
+					 String markerDefinitionKey = "MarkerDefinition_" + i;
+					 String colorRedKey = "ColorRed_" + i;
+					 String colorGreenKey = "ColorGreen_" + i;
+					 String colorBlueKey = "ColorBlue_" + i;
+					 String positionXKey = "PositionX_" + i;
+					 String positionYKey = "PositionY_" + i;
+					 
+					 String patternName = form.get(patternNameKey);
+					 String objectDefinition = form.get(objectDefinitionKey);
+					 String markerDefinition = form.get(markerDefinitionKey);
+					 float colorR = Float.parseFloat(form.get(colorRedKey));
+					 float colorG = Float.parseFloat(form.get(colorGreenKey));
+					 float colorB = Float.parseFloat(form.get(colorBlueKey));
+					 int positionX = Integer.parseInt(form.get(positionXKey));
+					 int positionY = Integer.parseInt(form.get(positionYKey));
+					 
+					 Structure structure = new Structure();
+					 structure.definition = form.get(objectDefinitionKey);
+					 structure.positionX = 0;
+					 structure.positionY = 0;
+					 structure.colorB = colorB;
+					 structure.colorG = colorG;
+					 structure.colorR = colorR;
+					 structure.positionX = positionX;
+					 structure.positionY = positionY;
+					 
+					 Marker marker = new Marker();
+					 marker.fileName = patternName + ".patt";
+					 marker.name = patternName;
+					 marker.pattern = markerDefinition;
+					 
+					 structure.save();
+					 marker.save();
+					 
+					 structure.marker = marker;
+					 structure.update();
+					 
+					 marker.structure = structure;
+					 marker.session = session;
+					 marker.update();
+				 }
+			 }
 			 
 			 session.users.add(host);
 			 session.update();
 			 
-		     return ok(session.id.toString());
+		     return ok(views.html.create.render(session.id.intValue()));
 		 }
 	}
 	

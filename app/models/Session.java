@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -19,7 +20,11 @@ public class Session extends Model {
 	public String name;
 	
 	@OneToMany
+	@Column(unique = false)
 	public List<SessionUser> users;
+	
+	@OneToMany
+	public List<Marker> markers;
 	
 	public static Finder<Long, Session> find = new Finder<Long, Session>(Session.class);
 	

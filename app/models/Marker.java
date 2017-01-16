@@ -3,6 +3,7 @@ package models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.avaje.ebean.Model;
@@ -24,6 +25,10 @@ public class Marker extends Model {
 	@OneToOne
 	@JsonIgnore
 	public Structure structure = null;
+	
+	@ManyToOne
+	@JsonIgnore
+	public Session session = null;
 
 	public static Finder<Long, Marker> find = new Finder<Long, Marker>(Marker.class);
 

@@ -9,6 +9,7 @@ create table marker (
   file_name                     varchar(255),
   pattern                       TEXT,
   structure_id                  bigint,
+  session_id                    bigint,
   constraint uq_marker_structure_id unique (structure_id),
   constraint pk_marker primary key (id)
 );
@@ -51,6 +52,9 @@ create table user (
 
 alter table marker add constraint fk_marker_structure_id foreign key (structure_id) references structure (id) on delete restrict on update restrict;
 
+alter table marker add constraint fk_marker_session_id foreign key (session_id) references session (id) on delete restrict on update restrict;
+create index ix_marker_session_id on marker (session_id);
+
 alter table session_user add constraint fk_session_user_user_id foreign key (user_id) references user (id) on delete restrict on update restrict;
 
 alter table session_user add constraint fk_session_user_session_id foreign key (session_id) references session (id) on delete restrict on update restrict;
@@ -62,6 +66,9 @@ alter table structure add constraint fk_structure_marker_id foreign key (marker_
 # --- !Downs
 
 alter table marker drop foreign key fk_marker_structure_id;
+
+alter table marker drop foreign key fk_marker_session_id;
+drop index ix_marker_session_id on marker;
 
 alter table session_user drop foreign key fk_session_user_user_id;
 
