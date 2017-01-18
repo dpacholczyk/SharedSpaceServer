@@ -20,13 +20,13 @@
 		    
 		    <input type="hidden" name="ElementsCount" id="elementsCount" value="0" />
 		    
-		    <button type="submit" id="sendButton" class="btn btn-primary">Create session</button>
+		    <button type="submit" id="sendButton" class="btn btn-primary" style="display: none;">Create session</button>
 		 
 		 </form>   
 		 
     </div>
 
-<div style="display: none;" id="templateContainer">
+	<div style="display: none;" id="templateContainer">
 			<hr />
 			<h3>Set ###NUMBER###</h3>
 		    <div class="form-group">
@@ -38,35 +38,37 @@
 		    	<textarea class="form-control markerDefinition" name="MarkerDefinition" rows="3" placeholder="Marker definition"></textarea>
 		    </div>
 		    <div class="form-group">
-		    	<label for="makerDefinition">Marker definition</label>
+		    	<label for="makerDefinition">Object definition</label>
 		    	<textarea class="form-control objectDefinition" name="ObjectDefinition" rows="3" placeholder="Object definition"></textarea>
 		    </div>
 		    <div class="form-group">
 		        <label for="colorRed">Color RED</label>
-		        <input type="text" class="form-control colorRed" name="ColorRed" placeholder="Color RED (int value)">
+		        <input value="0" type="text" class="form-control colorRed" name="ColorRed" placeholder="Color RED (int value)">
 		    </div>
 		    <div class="form-group">
 		        <label for="colorBlue">Color BLUE</label>
-		        <input type="text" class="form-control colorBlue" name="ColorBlue" placeholder="Color BLUE (int value)">
+		        <input value="0" type="text" class="form-control colorBlue" name="ColorBlue" placeholder="Color BLUE (int value)">
 		    </div>
 		    <div class="form-group">
 		        <label for="colorRed">Color GREEN</label>
-		        <input type="text" class="form-control colorGreen" name="ColorGreen" placeholder="Color GREEN (int value)">
+		        <input value="0" type="text" class="form-control colorGreen" name="ColorGreen" placeholder="Color GREEN (int value)">
 		    </div>
 		    <div class="form-group">
 		        <label for="positionX">Position X</label>
-		        <input type="text" class="form-control positionX" name="PositionX" placeholder="Position X (int value)">
+		        <input value="0" type="text" class="form-control positionX" name="PositionX" placeholder="Position X (int value)">
 		    </div>
 		    <div class="form-group">
 		        <label for="positionY">Position Y</label>
-		        <input type="text" class="form-control positionY" name="PositionY" placeholder="Position Y (int value)">
+		        <input value="0" type="text" class="form-control positionY" name="PositionY" placeholder="Position Y (int value)">
 		    </div>
 		    <hr />
-</div>
+	</div>
 
 <script>
 $(document).ready(function() {
 	$('#addMarker').on('click', function() {
+		$('#sendButton').show();
+		
 		var template = $('#templateContainer').html();
 		var currentCount = parseInt($('#elementsCount').val());
 		var newCount = currentCount + 1;

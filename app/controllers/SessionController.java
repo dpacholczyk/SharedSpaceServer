@@ -40,9 +40,6 @@ public class SessionController extends Controller {
 			 String sessionName = form.get("SessionName");
 			 int elementsCount = Integer.parseInt(form.get("ElementsCount"));
 			 
-			 System.out.println("DeviceId: " + deviceId);
-			 System.out.println("SessionName: " + sessionName);
-			 
 			 User user = User.findByDeviceId(deviceId);
 			 if(user == null) {
 				 System.out.println("USER NIE ISTNIEJE");
@@ -64,7 +61,6 @@ public class SessionController extends Controller {
 			 host.user = user;
 			 host.session = session;
 			 host.save();
-			 System.out.println("ISTNIEJE: " + host.id + " " + host.user.name + " " + host.user.deviceId);
 
 			 if(elementsCount > 0) {
 				 for(int i = 1; i <= elementsCount; i++) {

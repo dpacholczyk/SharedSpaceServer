@@ -23,7 +23,6 @@ public class Marker extends Model {
 	public String pattern = null;
 	
 	@OneToOne
-	@JsonIgnore
 	public Structure structure = null;
 	
 	@ManyToOne
