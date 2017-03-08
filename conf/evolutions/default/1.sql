@@ -3,6 +3,12 @@
 
 # --- !Ups
 
+create table fcm (
+  id                            bigint auto_increment not null,
+  token                         varchar(255),
+  constraint pk_fcm primary key (id)
+);
+
 create table marker (
   id                            bigint auto_increment not null,
   name                          varchar(255),
@@ -76,6 +82,8 @@ alter table session_user drop foreign key fk_session_user_session_id;
 drop index ix_session_user_session_id on session_user;
 
 alter table structure drop foreign key fk_structure_marker_id;
+
+drop table if exists fcm;
 
 drop table if exists marker;
 

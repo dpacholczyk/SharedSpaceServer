@@ -23,5 +23,11 @@ GET		/sessions/get/:sessionId	controllers.SessionController.get(sessionId: Long)
 GET		/sessions/users/:sessionId	controllers.SessionController.getUsers(sessionId: Long)
 GET		/sessions/creator			controllers.SessionController.creator
 
+GET		/notifications/token/save/:token	controllers.NotificationController.saveToken(token: String)
+GET		/notifications/send			controllers.NotificationController.sendNotification
+POST	/notifications/receive		controllers.NotificationController.receiveNotification
+
+GET		/test/message				controllers.TestController.testMessage
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
