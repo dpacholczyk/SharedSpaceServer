@@ -66,11 +66,8 @@ public class URLUtils
      * @throws IOException 
      */
     public static void postRequestToGcm(String POST_URL, String contentType, Map<String, String> params) throws IOException {
-    	String apiKey = "AAAAB2kG5wc:APA91bFysnqbcGwLMeU7WwhRLJCgg0QNFtAbl9IuZMX-xw-7y26uMJBISi3hxc0q-0-mPMhertjA8KHvsc_ux1v4mF9IS2yyocmTghnIyOQS6PfzQcibjeWYtuodTiGCosdkqfOdiufT"; // You FCM AUTH key
-    	String senderId = "31826831111";
     	String FMCurl = "https://fcm.googleapis.com/fcm/send"; 
 
-    	String userDeviceIdKey = "clNNC8ybHtY:APA91bGxwaqZq31rrPqTzHrFmWafmYXKyzAc5NhYsOgiQuxqyIxyqt2svLUA7TKJglpgLBBVkYk7s8FwNSRfIQC_tL19CxrzykwTi8QYj0vr0AafVvU9iv4eVUH8CdhR4_CZ15OArXGL";
     	String packageName = "threewe.arinterface.sharedspaceclient";
     	
     	   URL url = new URL(FMCurl);
