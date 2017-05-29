@@ -66,9 +66,10 @@ public class URLUtils
      * @throws IOException 
      */
     public static void postRequestToGcm(String POST_URL, String contentType, Map<String, String> params) throws IOException {
+    	String apiKey = Secret.apiKey;
+    	String senderId = Secret.senderId;
+    	String packageName = Secret.packageName;
     	String FMCurl = "https://fcm.googleapis.com/fcm/send"; 
-
-    	String packageName = "threewe.arinterface.sharedspaceclient";
     	
     	   URL url = new URL(FMCurl);
     	   HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
@@ -91,7 +92,7 @@ public class URLUtils
 	   		
 	   		Notification notification = new Notification();
 	   		notification
-	   			.to(userDeviceIdKey.trim())
+	   			.to(params.get("to").trim())
 	   			.collapse_key("a_collapse_key")
 				.priority(1)
 //				.registration_ids(targets)

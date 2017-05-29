@@ -25,6 +25,16 @@ public class Session extends Model {
 	
 	@OneToMany
 	public List<Marker> markers;
+
+	public SessionUser getHost() {
+		for(SessionUser user : users) {
+			if(user.isHost) {
+				return user;
+			}
+		}
+
+		return null;
+	}
 	
 	public static Finder<Long, Session> find = new Finder<Long, Session>(Session.class);
 	

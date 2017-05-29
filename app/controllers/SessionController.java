@@ -1,7 +1,6 @@
 package controllers;
 
 import java.util.List;
-import java.util.Map;
 
 import models.Marker;
 import models.Session;
@@ -14,12 +13,12 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.creator;
+import views.html.edit;
 
 public class SessionController extends Controller {
 	
 	public Result creator() {
-		
-		return ok(views.html.creator.render());
+        return ok(views.html.creator.render());
 	}
 	
 	public Result newSession() {
@@ -119,20 +118,65 @@ public class SessionController extends Controller {
 	public Result get(Long sessionId) {
 		Session session = Session.find.byId(sessionId);
 		
-		return ok(Json.toJson(session));
+		if(session == null) {
+			return badRequest("Session not found");
+		} else {
+			return ok(Json.toJson(session));
+		}		
 	}
 	
 	public Result getUsers(Long sessionId) {
 		Session session = Session.find.byId(sessionId);
+		
+		if(session == null) {
+			return badRequest("Session not found");
+		}
+		
 		List<SessionUser> users = session.users;
 		
 		return ok(Json.toJson(users));
 	}
 	
-	public Result join(Long userId, Long sessionId) {
+	public Result join(String deviceId, Long sessionId) {
+		User user = User.find.where().eq("device_id", deviceId).findUnique();		
+		if(user == null) {
+			return badRequest("User not found");
+		}
 		
+		Session session = Session.find.byId(sessionId);		
+		if(session == null) {
+			return badRequest("Session not found");
+		}
+		
+		SessionUser su = SessionUser.find.where().eq("user_id", user.id).findUnique();
+		if(su == null) {
+			su = new SessionUser();
+			su.isHost = false;
+			su.session = session;
+			su.user = user;
+			su.save();
+		} else {
+			su.session = session;
+			su.update();
+		}
+
+		session.users.add(su);
+		session.update();
 		
 		return ok();
 	}
 	
+	public Result edit() {
+		return ok(views.html.edit.render());
+	}
+
+	public Result editForm(long sessionId) {
+		Session session = Session.find.byId(sessionId);
+
+		return ok(views.html.editForm.render(session, session.getHost()));
+	}
+
+	public Result update() {
+		return ok();
+	}
 }

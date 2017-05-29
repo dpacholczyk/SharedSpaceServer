@@ -1,0 +1,19 @@
+@main("Session creator") {
+
+    <div class="container">
+		<h1>Edit session</h1>
+		<p>Pass ID of the session that you want to edit.</p>
+		<input type="text" id="session_id" />&nbsp;
+		<button id="edit">Edit</button>
+	</div>
+
+	<script>
+		$(document).ready(function() {
+		   $('#edit').on('click', function () {
+		       var id = $('#session_id').val();
+			   var url = "/sessions/edit/" + id;
+			   window.location = url;
+		   })
+		});
+	</script>
+}

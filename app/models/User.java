@@ -15,6 +15,8 @@ public class User extends Model {
 	
 	public String deviceId;
 	
+	public String token;
+	
 	public static Finder<Long, User> find = new Finder<Long, User>(User.class);
 	
 	public static User findByDeviceId(String deviceId) {

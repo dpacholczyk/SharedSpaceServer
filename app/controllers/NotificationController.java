@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import models.Fcm;
+import models.Session;
+import models.SessionUser;
+import models.User;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -16,16 +18,22 @@ public class NotificationController extends Controller {
 	private String title = null;
 	private String body = null;
 	
-	public Result saveToken(String token) {
-		Fcm fcm = Fcm.find.byId(new Long(1));
-		if(fcm == null) {
-			fcm = new Fcm(token);
-			fcm.save();
+	public Result saveToken(String deviceId, String token) {
+		User user = User.find.where().eq("device_id", deviceId).findUnique();
+		if(user == null) {
+			user = new User();
+			user.name = "auto";
+			user.deviceId = deviceId;
+			user.token = token;
+			user.save();
 		} else {
-			fcm.token = token;
-			fcm.update();
+			if(user.token != token) {
+				user.token = token;
+				user.update();
+			} else {
+				// do nothing
+			}
 		}
-		
 		
 		return ok();
 	}
@@ -51,22 +59,31 @@ public class NotificationController extends Controller {
 	
 	private void send() {
 		String googleUrl = "https://fcm.googleapis.com/fcm/send";
-		Fcm fcm = Fcm.find.byId(new Long(1));
-		try {
-			Map<String, String> params = new HashMap<String, String>();
-			params.put("to", fcm.token);
-			
-			if(this.title != null) {
-				params.put("title", this.title);
+		Session session = Session.find.byId(new Long(1));
+		for(SessionUser sUser : session.users) {
+			User user = sUser.user;
+			try {
+				String token = user.token;
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("to", token);
+				
+				System.out.println("TOKEN: " + token); 
+				
+				if(this.title != null) {
+					params.put("title", this.title);
+				}
+				if(this.body != null) {
+					params.put("body", this.body);
+				}
+				
+				System.out.println("TITLE: " + this.title);
+				System.out.println("BODY: " + this.body);
+				
+				URLUtils.postRequestToGcm(googleUrl, null, params);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			if(this.body != null) {
-				params.put("body", this.body);
-			}
-			
-			URLUtils.postRequestToGcm(googleUrl, null, params);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 }

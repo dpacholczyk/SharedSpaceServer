@@ -1,15 +1,5 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
-
-# An example controller showing a sample home page
-GET     /                           controllers.HomeController.index
 GET		/change_status				controllers.HomeController.changeStatus
 GET		/check_status				controllers.HomeController.checkStatus
-# An example controller showing how to use dependency injection
-GET     /count                      controllers.CountController.count
-# An example controller showing how to write asynchronous code
-GET     /message                    controllers.AsyncController.message
 
 GET		/markers					controllers.MarkerController.markers
 
@@ -18,16 +8,20 @@ GET		/structures/marker/:markerId		controllers.StructureController.structureForM
 
 POST	/sessions/create			controllers.SessionController.create
 POST	/sessions/test				controllers.SessionController.test
-GET		/sessions/join/:userId/:sessionId				controllers.SessionController.join(userId: Long, sessionId: Long)
+GET		/sessions/join/:deviceId/:sessionId				controllers.SessionController.join(deviceId: String, sessionId: Long)
 GET		/sessions/get/:sessionId	controllers.SessionController.get(sessionId: Long)
 GET		/sessions/users/:sessionId	controllers.SessionController.getUsers(sessionId: Long)
 GET		/sessions/creator			controllers.SessionController.creator
+GET		/			                controllers.SessionController.creator
+GET     /sessions/edit              controllers.SessionController.edit
+GET     /sessions/edit/:sessionId   controllers.SessionController.editForm(sessionId: Long)
+POST    /sessions/save              controllers.SessionController.update
 
-GET		/notifications/token/save/:token	controllers.NotificationController.saveToken(token: String)
+GET		/notifications/token/save/:deviceId/:token	controllers.NotificationController.saveToken(deviceId: String, token: String)
 GET		/notifications/send			controllers.NotificationController.sendNotification
 POST	/notifications/receive		controllers.NotificationController.receiveNotification
 
-GET		/test/message				controllers.TestController.testMessage
+GET		/users/get/:deviceId		controllers.UserController.getUser(deviceId: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
