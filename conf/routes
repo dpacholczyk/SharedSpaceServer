@@ -17,6 +17,8 @@ GET     /sessions/edit              controllers.SessionController.edit
 GET     /sessions/edit/:sessionId   controllers.SessionController.editForm(sessionId: Long)
 POST    /sessions/save              controllers.SessionController.update
 
+POST    /state/sync                 controllers.StateController.sync
+
 GET		/notifications/token/save/:deviceId/:token	controllers.NotificationController.saveToken(deviceId: String, token: String)
 GET		/notifications/send			controllers.NotificationController.sendNotification
 POST	/notifications/receive		controllers.NotificationController.receiveNotification

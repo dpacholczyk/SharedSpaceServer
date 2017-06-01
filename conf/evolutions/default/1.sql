@@ -43,6 +43,14 @@ create table structure (
   constraint pk_structure primary key (id)
 );
 
+create table sync_history (
+  id                            bigint auto_increment not null,
+  structure_id                  bigint,
+  session_id                    bigint,
+  active                        tinyint(1) default 0,
+  constraint pk_sync_history primary key (id)
+);
+
 create table user (
   id                            bigint auto_increment not null,
   name                          varchar(255),
@@ -63,6 +71,12 @@ create index ix_session_user_session_id on session_user (session_id);
 
 alter table structure add constraint fk_structure_marker_id foreign key (marker_id) references marker (id) on delete restrict on update restrict;
 
+alter table sync_history add constraint fk_sync_history_structure_id foreign key (structure_id) references structure (id) on delete restrict on update restrict;
+create index ix_sync_history_structure_id on sync_history (structure_id);
+
+alter table sync_history add constraint fk_sync_history_session_id foreign key (session_id) references session (id) on delete restrict on update restrict;
+create index ix_sync_history_session_id on sync_history (session_id);
+
 
 # --- !Downs
 
@@ -78,6 +92,12 @@ drop index ix_session_user_session_id on session_user;
 
 alter table structure drop foreign key fk_structure_marker_id;
 
+alter table sync_history drop foreign key fk_sync_history_structure_id;
+drop index ix_sync_history_structure_id on sync_history;
+
+alter table sync_history drop foreign key fk_sync_history_session_id;
+drop index ix_sync_history_session_id on sync_history;
+
 drop table if exists marker;
 
 drop table if exists session;
@@ -85,6 +105,8 @@ drop table if exists session;
 drop table if exists session_user;
 
 drop table if exists structure;
+
+drop table if exists sync_history;
 
 drop table if exists user;
 
