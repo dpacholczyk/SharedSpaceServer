@@ -47,6 +47,8 @@ create table sync_history (
   id                            bigint auto_increment not null,
   structure_id                  bigint,
   session_id                    bigint,
+  sender_id                     bigint,
+  activity_type                 varchar(255),
   active                        tinyint(1) default 0,
   constraint pk_sync_history primary key (id)
 );
@@ -77,6 +79,9 @@ create index ix_sync_history_structure_id on sync_history (structure_id);
 alter table sync_history add constraint fk_sync_history_session_id foreign key (session_id) references session (id) on delete restrict on update restrict;
 create index ix_sync_history_session_id on sync_history (session_id);
 
+alter table sync_history add constraint fk_sync_history_sender_id foreign key (sender_id) references user (id) on delete restrict on update restrict;
+create index ix_sync_history_sender_id on sync_history (sender_id);
+
 
 # --- !Downs
 
@@ -97,6 +102,9 @@ drop index ix_sync_history_structure_id on sync_history;
 
 alter table sync_history drop foreign key fk_sync_history_session_id;
 drop index ix_sync_history_session_id on sync_history;
+
+alter table sync_history drop foreign key fk_sync_history_sender_id;
+drop index ix_sync_history_sender_id on sync_history;
 
 drop table if exists marker;
 

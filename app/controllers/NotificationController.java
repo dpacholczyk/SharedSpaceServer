@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import models.Session;
@@ -17,6 +18,7 @@ public class NotificationController extends Controller {
 	
 	private String title = null;
 	private String body = null;
+	private List<User> excluded = null;
 	
 	public Result saveToken(String deviceId, String token) {
 		User user = User.find.where().eq("device_id", deviceId).findUnique();
@@ -61,29 +63,35 @@ public class NotificationController extends Controller {
 		String googleUrl = "https://fcm.googleapis.com/fcm/send";
 		Session session = Session.find.byId(new Long(1));
 		for(SessionUser sUser : session.users) {
-			User user = sUser.user;
-			try {
-				String token = user.token;
-				Map<String, String> params = new HashMap<String, String>();
-				params.put("to", token);
-				
-				System.out.println("TOKEN: " + token); 
-				
-				if(this.title != null) {
-					params.put("title", this.title);
+
+//			if(!this.excluded.contains(sUser.user)) {
+				User user = sUser.user;
+				try {
+					String token = user.token;
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("to", token);
+
+					System.out.println("TOKEN: " + token);
+
+					if(this.title != null) {
+						params.put("title", this.title);
+					}
+					if(this.body != null) {
+						params.put("body", this.body);
+					}
+					params.put("task_type", "ACTIVITY");
+					params.put("structure", "1");
+					params.put("session", "1");
+
+					System.out.println("TITLE: " + this.title);
+					System.out.println("BODY: " + this.body);
+
+					URLUtils.postRequestToGcm(googleUrl, null, params);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				if(this.body != null) {
-					params.put("body", this.body);
-				}
-				
-				System.out.println("TITLE: " + this.title);
-				System.out.println("BODY: " + this.body);
-				
-				URLUtils.postRequestToGcm(googleUrl, null, params);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			}
 		}
 	}
 
@@ -101,5 +109,13 @@ public class NotificationController extends Controller {
 
 	public String getTitle() {
 		return this.title;
+	}
+
+	public void setExcluded(List<User> excluded) {
+		this.excluded = excluded;
+	}
+
+	public List<User> getExcluded() {
+		return this.excluded;
 	}
 }

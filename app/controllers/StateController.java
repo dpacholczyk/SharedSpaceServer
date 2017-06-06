@@ -1,16 +1,15 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import models.Marker;
 import models.Session;
 import models.Structure;
 import models.SyncHistory;
+import models.User;
 import play.data.DynamicForm;
 import play.data.Form;
-import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StateController extends Controller {
@@ -24,19 +23,27 @@ public class StateController extends Controller {
 			String activityType = form.get("activity");
 			Long structureId = new Long(form.get("structure"));
 			Long sessionId = new Long(form.get("session"));
+			String deviceId = form.get("sender");
 
 			Structure structure = Structure.find.byId(structureId);
 			Session session = Session.find.byId(sessionId);
+			User sender = User.findByDeviceId(deviceId);
 
 			SyncHistory history = new SyncHistory();
 			history.session = session;
 			history.structure = structure;
 			history.active = true;
-			history.save();
+			history.activityType = activityType;
+			history.sender = sender;
+//			history.save();
+
+			List<User> exclude = new ArrayList<>();
+			exclude.add(sender);
 
 			NotificationController nc = new NotificationController();
 			nc.setTitle("sync aktywności");
 			nc.setBody("sync aktywności");
+			nc.setExcluded(exclude);
 			nc.sendNotification();
 		}
 

@@ -20,5 +20,10 @@ public class SyncHistory extends Model {
     @ManyToOne
     public Session session;
 
+    @ManyToOne
+    public User sender;
+
+    public String activityType;
+
     public boolean active;
 }

@@ -103,6 +103,12 @@ public class URLUtils
 //				.data(data)
 //				.title("Testing")
 //				.body("Hello World!dasdasdsadsa");
+
+        Map<String, Object> extraParams = new HashMap<>();
+        extraParams.put("action", "ACTIVITY");
+        extraParams.put("structure", 1);
+        extraParams.put("action_name", "Highlight");
+        notification.data(extraParams);
 	   		
 	   		if(params.containsKey("title")) {
 	   			notification.title(params.get("title"));
@@ -110,6 +116,7 @@ public class URLUtils
 	   		if(params.containsKey("body")) {
 	   			notification.body(params.get("body"));
 	   		}
+
 	   		
 	   		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
