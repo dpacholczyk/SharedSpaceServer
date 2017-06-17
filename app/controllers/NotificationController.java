@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ public class NotificationController extends Controller {
 	private String title = null;
 	private String body = null;
 	private List<User> excluded = null;
+	private Map<String, Object> extraParams = new HashMap<>();
 	
 	public Result saveToken(String deviceId, String token) {
 		User user = User.find.where().eq("device_id", deviceId).findUnique();
@@ -79,9 +81,12 @@ public class NotificationController extends Controller {
 					if(this.body != null) {
 						params.put("body", this.body);
 					}
-					params.put("task_type", "ACTIVITY");
-					params.put("structure", "1");
-					params.put("session", "1");
+
+					Iterator it = extraParams.entrySet().iterator();
+					while(it.hasNext()) {
+						Map.Entry<String, String> pair = (Map.Entry)it.next();
+						params.put(pair.getKey(), pair.getValue());
+					}
 
 					System.out.println("TITLE: " + this.title);
 					System.out.println("BODY: " + this.body);
@@ -117,5 +122,9 @@ public class NotificationController extends Controller {
 
 	public List<User> getExcluded() {
 		return this.excluded;
+	}
+
+	public void addExtraParam(String key, Object value) {
+		this.extraParams.put(key, value);
 	}
 }

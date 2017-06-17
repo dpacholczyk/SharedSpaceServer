@@ -25,6 +25,8 @@ public class StateController extends Controller {
 			Long sessionId = new Long(form.get("session"));
 			String deviceId = form.get("sender");
 
+			System.out.println("SYNC: " + activityType + " | " + structureId + " | " + sessionId + " | " + deviceId);
+
 			Structure structure = Structure.find.byId(structureId);
 			Session session = Session.find.byId(sessionId);
 			User sender = User.findByDeviceId(deviceId);
@@ -44,6 +46,13 @@ public class StateController extends Controller {
 			nc.setTitle("sync aktywności");
 			nc.setBody("sync aktywności");
 			nc.setExcluded(exclude);
+
+			nc.addExtraParam("structure", structureId);
+			nc.addExtraParam("session", sessionId);
+			nc.addExtraParam("sender", deviceId);
+			nc.addExtraParam("action_name", activityType);
+			nc.addExtraParam("action", "ACTIVITY");
+
 			nc.sendNotification();
 		}
 

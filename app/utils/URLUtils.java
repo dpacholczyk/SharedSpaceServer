@@ -104,12 +104,15 @@ public class URLUtils
 //				.title("Testing")
 //				.body("Hello World!dasdasdsadsa");
 
-        Map<String, Object> extraParams = new HashMap<>();
-        extraParams.put("action", "ACTIVITY");
-        extraParams.put("structure", 1);
-        extraParams.put("action_name", "Highlight");
-        notification.data(extraParams);
-	   		
+        if(params.containsKey("action") && params.get("action").equals("ACTIVITY")) {
+            Map<String, Object> extraParams = new HashMap<>();
+            extraParams.put("action", "ACTIVITY");
+            extraParams.put("structure", params.get("structure"));
+            extraParams.put("action_name", params.get("action_name"));
+            notification.data(extraParams);
+        }
+
+
 	   		if(params.containsKey("title")) {
 	   			notification.title(params.get("title"));
 	   		}
