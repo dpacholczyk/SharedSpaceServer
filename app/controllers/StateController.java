@@ -24,6 +24,7 @@ public class StateController extends Controller {
 			Long structureId = new Long(form.get("structure"));
 			Long sessionId = new Long(form.get("session"));
 			String deviceId = form.get("sender");
+			String colorData = form.get("color");
 
 			System.out.println("SYNC: " + activityType + " | " + structureId + " | " + sessionId + " | " + deviceId);
 
@@ -52,6 +53,7 @@ public class StateController extends Controller {
 			nc.addExtraParam("sender", deviceId);
 			nc.addExtraParam("action_name", activityType);
 			nc.addExtraParam("action", "ACTIVITY");
+			nc.addExtraParam("color", colorData);
 
 			nc.sendNotification();
 		}

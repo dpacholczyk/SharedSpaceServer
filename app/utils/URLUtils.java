@@ -109,6 +109,11 @@ public class URLUtils
             extraParams.put("action", "ACTIVITY");
             extraParams.put("structure", params.get("structure"));
             extraParams.put("action_name", params.get("action_name"));
+
+            if(params.containsKey("color")) {
+                extraParams.put("color", params.get("color"));
+            }
+
             notification.data(extraParams);
         }
 
