@@ -64,6 +64,7 @@ public class SessionController extends Controller {
 			 if(elementsCount > 0) {
 				 for(int i = 1; i <= elementsCount; i++) {
 					 String patternNameKey = "PatternName_" + i;
+					 String objectNameKey = "ObjectName_" + i;
 					 String objectDefinitionKey = "ObjectDefinition_" + i;
 					 String markerDefinitionKey = "MarkerDefinition_" + i;
 					 String colorRedKey = "ColorRed_" + i;
@@ -73,6 +74,7 @@ public class SessionController extends Controller {
 					 String positionYKey = "PositionY_" + i;
 					 
 					 String patternName = form.get(patternNameKey);
+					 String objectName = form.get(objectNameKey);
 					 String objectDefinition = form.get(objectDefinitionKey);
 					 String markerDefinition = form.get(markerDefinitionKey);
 					 float colorR = Float.parseFloat(form.get(colorRedKey));
@@ -82,7 +84,8 @@ public class SessionController extends Controller {
 					 int positionY = Integer.parseInt(form.get(positionYKey));
 					 
 					 Structure structure = new Structure();
-					 structure.definition = form.get(objectDefinitionKey);
+					 structure.name = objectName;
+					 structure.definition = objectDefinition;
 					 structure.positionX = 0;
 					 structure.positionY = 0;
 					 structure.colorB = colorB;

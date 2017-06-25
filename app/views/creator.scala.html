@@ -37,6 +37,10 @@
 		    	<label for="makerDefinition">Marker definition</label>
 		    	<textarea class="form-control markerDefinition" name="MarkerDefinition" rows="3" placeholder="Marker definition"></textarea>
 		    </div>
+			<div class="form-group">
+				<label for="objectName">Color RED</label>
+				<input value="0" type="text" class="form-control objectName" name="ObjectName" placeholder="Object name">
+			</div>
 		    <div class="form-group">
 		    	<label for="makerDefinition">Object definition</label>
 		    	<textarea class="form-control objectDefinition" name="ObjectDefinition" rows="3" placeholder="Object definition"></textarea>
@@ -72,7 +76,8 @@ $(document).ready(function() {
 		var currentCount = parseInt($('#elementsCount').val());
 		var newCount = currentCount + 1;
 		var newMarkerName = 'MarkerDefinition_' + newCount;
-		var newObjectName = 'ObjectDefinition_' + newCount;
+		var newObjectName = 'ObjectName_' + newCount;
+		var newObjectDefinition = 'ObjectDefinition_' + newCount;
 		var newPatternName = 'PatternName_' + newCount;
 		var colorRedName = 'ColorRed_' + newCount;
 		var colorGreenName = 'ColorGreen_' + newCount;
@@ -82,7 +87,8 @@ $(document).ready(function() {
 		template = template.replace('###NUMBER###', newCount);
 		template = template.replace('PatternName', newPatternName);
 		template = template.replace('MarkerDefinition', newMarkerName);
-		template = template.replace('ObjectDefinition', newObjectName);
+		template = template.replace('ObjectName', newObjectName);
+		template = template.replace('ObjectDefinition', newObjectDefinition);
 		template = template.replace('ColorRed', colorRedName);
 		template = template.replace('ColorGreen', colorGreenName);
 		template = template.replace('ColorBlue', colorBlueName);
