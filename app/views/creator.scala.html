@@ -33,37 +33,13 @@
 		        <label for="patternName">Pattern name</label>
 		        <input type="text" class="form-control patternName" name="PatternName" placeholder="Pattern name">
 		    </div>
-		    <div class="form-group">
-		    	<label for="makerDefinition">Marker definition</label>
-		    	<textarea class="form-control markerDefinition" name="MarkerDefinition" rows="3" placeholder="Marker definition"></textarea>
-		    </div>
 			<div class="form-group">
-				<label for="objectName">Color RED</label>
-				<input value="0" type="text" class="form-control objectName" name="ObjectName" placeholder="Object name">
+				<label for="objectName">Object name</label>
+				<input value="" type="text" class="form-control objectName" name="ObjectName" placeholder="Object name">
 			</div>
 		    <div class="form-group">
 		    	<label for="makerDefinition">Object definition</label>
 		    	<textarea class="form-control objectDefinition" name="ObjectDefinition" rows="3" placeholder="Object definition"></textarea>
-		    </div>
-		    <div class="form-group">
-		        <label for="colorRed">Color RED</label>
-		        <input value="0" type="text" class="form-control colorRed" name="ColorRed" placeholder="Color RED (int value)">
-		    </div>
-		    <div class="form-group">
-		        <label for="colorBlue">Color BLUE</label>
-		        <input value="0" type="text" class="form-control colorBlue" name="ColorBlue" placeholder="Color BLUE (int value)">
-		    </div>
-		    <div class="form-group">
-		        <label for="colorRed">Color GREEN</label>
-		        <input value="0" type="text" class="form-control colorGreen" name="ColorGreen" placeholder="Color GREEN (int value)">
-		    </div>
-		    <div class="form-group">
-		        <label for="positionX">Position X</label>
-		        <input value="0" type="text" class="form-control positionX" name="PositionX" placeholder="Position X (int value)">
-		    </div>
-		    <div class="form-group">
-		        <label for="positionY">Position Y</label>
-		        <input value="0" type="text" class="form-control positionY" name="PositionY" placeholder="Position Y (int value)">
 		    </div>
 	</div>
 
@@ -79,21 +55,10 @@ $(document).ready(function() {
 		var newObjectName = 'ObjectName_' + newCount;
 		var newObjectDefinition = 'ObjectDefinition_' + newCount;
 		var newPatternName = 'PatternName_' + newCount;
-		var colorRedName = 'ColorRed_' + newCount;
-		var colorGreenName = 'ColorGreen_' + newCount;
-		var colorBlueName = 'ColorBlue_' + newCount;
-		var positionXName = 'PositionX_' + newCount;
-		var positionYName = 'PositionY_' + newCount;
 		template = template.replace('###NUMBER###', newCount);
 		template = template.replace('PatternName', newPatternName);
-		template = template.replace('MarkerDefinition', newMarkerName);
 		template = template.replace('ObjectName', newObjectName);
 		template = template.replace('ObjectDefinition', newObjectDefinition);
-		template = template.replace('ColorRed', colorRedName);
-		template = template.replace('ColorGreen', colorGreenName);
-		template = template.replace('ColorBlue', colorBlueName);
-		template = template.replace('PositionX', positionXName);
-		template = template.replace('PositionY', positionYName);
 		$(this).after(template);
 		$('#elementsCount').val(newCount);
 	});

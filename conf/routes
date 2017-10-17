@@ -1,8 +1,6 @@
 GET		/change_status				controllers.HomeController.changeStatus
 GET		/check_status				controllers.HomeController.checkStatus
 
-GET		/markers					controllers.MarkerController.markers
-
 GET		/structures					controllers.StructureController.structures
 GET		/structures/marker/:markerId		controllers.StructureController.structureForMarker(markerId: Integer)
 
@@ -20,7 +18,7 @@ POST    /sessions/save              controllers.SessionController.update
 POST    /state/sync                 controllers.StateController.sync
 
 GET		/notifications/token/save/:deviceId/:token	controllers.NotificationController.saveToken(deviceId: String, token: String)
-GET		/notifications/send			controllers.NotificationController.sendNotification
+GET		/notifications/send/:sessionId			controllers.NotificationController.sendNotification(sessionId: Long)
 POST	/notifications/receive		controllers.NotificationController.receiveNotification
 
 GET		/users/get/:deviceId		controllers.UserController.getUser(deviceId: String)

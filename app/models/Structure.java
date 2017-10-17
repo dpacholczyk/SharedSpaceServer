@@ -18,19 +18,9 @@ public class Structure extends Model {
 
 	@OneToOne
 	@JsonIgnore
-	public Marker marker = null;
+	public Session session = null;
 	
-	public float colorR = 0;
-	
-	public float colorG = 0;
-	
-	public float colorB = 0;
-	
-	public double positionX = 0;
-	
-	public double positionY = 0;
-	
-	@Column(columnDefinition = "TEXT")
+	@Column(columnDefinition = "LONGTEXT")
 	public String definition = null;
 	
 	public static Finder<Long, Structure> find = new Finder<Long, Structure>(Structure.class);

@@ -24,7 +24,7 @@ public class Session extends Model {
 	public List<SessionUser> users;
 	
 	@OneToMany
-	public List<Marker> markers;
+	public List<Structure> structures;
 
 	public SessionUser getHost() {
 		for(SessionUser user : users) {

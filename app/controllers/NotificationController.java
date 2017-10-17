@@ -42,8 +42,8 @@ public class NotificationController extends Controller {
 		return ok();
 	}
 	
-	public Result sendNotification() {
-		this.send();
+	public Result sendNotification(Long sessionId) {
+		this.send(sessionId);
 		
 		return ok();
 	}
@@ -56,14 +56,14 @@ public class NotificationController extends Controller {
 		this.title = "Sync";
 		this.body = message;
 		
-		this.send();
+		this.send(null);
 		
 		return ok(message);
 	}
 	
-	private void send() {
+	private void send(Long sessionId) {
 		String googleUrl = "https://fcm.googleapis.com/fcm/send";
-		Session session = Session.find.byId(new Long(1));
+		Session session = Session.find.byId(sessionId);
 		for(SessionUser sUser : session.users) {
 
 //			if(!this.excluded.contains(sUser.user)) {

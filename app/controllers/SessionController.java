@@ -2,7 +2,7 @@ package controllers;
 
 import java.util.List;
 
-import models.Marker;
+import com.avaje.ebean.Expr;
 import models.Session;
 import models.SessionUser;
 import models.Structure;
@@ -12,8 +12,6 @@ import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.creator;
-import views.html.edit;
 
 public class SessionController extends Controller {
 	
@@ -66,48 +64,19 @@ public class SessionController extends Controller {
 					 String patternNameKey = "PatternName_" + i;
 					 String objectNameKey = "ObjectName_" + i;
 					 String objectDefinitionKey = "ObjectDefinition_" + i;
-					 String markerDefinitionKey = "MarkerDefinition_" + i;
-					 String colorRedKey = "ColorRed_" + i;
-					 String colorGreenKey = "ColorGreen_" + i;
-					 String colorBlueKey = "ColorBlue_" + i;
-					 String positionXKey = "PositionX_" + i;
-					 String positionYKey = "PositionY_" + i;
-					 
+
 					 String patternName = form.get(patternNameKey);
 					 String objectName = form.get(objectNameKey);
 					 String objectDefinition = form.get(objectDefinitionKey);
-					 String markerDefinition = form.get(markerDefinitionKey);
-					 float colorR = Float.parseFloat(form.get(colorRedKey));
-					 float colorG = Float.parseFloat(form.get(colorGreenKey));
-					 float colorB = Float.parseFloat(form.get(colorBlueKey));
-					 int positionX = Integer.parseInt(form.get(positionXKey));
-					 int positionY = Integer.parseInt(form.get(positionYKey));
-					 
+
 					 Structure structure = new Structure();
 					 structure.name = objectName;
 					 structure.definition = objectDefinition;
-					 structure.positionX = 0;
-					 structure.positionY = 0;
-					 structure.colorB = colorB;
-					 structure.colorG = colorG;
-					 structure.colorR = colorR;
-					 structure.positionX = positionX;
-					 structure.positionY = positionY;
-					 
-					 Marker marker = new Marker();
-					 marker.fileName = patternName + ".patt";
-					 marker.name = patternName;
-					 marker.pattern = markerDefinition;
-					 
+					 structure.session = session;
+
 					 structure.save();
-					 marker.save();
-					 
-					 structure.marker = marker;
-					 structure.update();
-					 
-					 marker.structure = structure;
-					 marker.session = session;
-					 marker.update();
+
+					 session.structures.add(structure);
 				 }
 			 }
 			 
@@ -151,7 +120,9 @@ public class SessionController extends Controller {
 			return badRequest("Session not found");
 		}
 		
-		SessionUser su = SessionUser.find.where().eq("user_id", user.id).findUnique();
+		SessionUser su = SessionUser.find.where().
+		and(Expr.eq("user_id", user.id), Expr.eq("session_id", sessionId))
+		.findUnique();
 		if(su == null) {
 			su = new SessionUser();
 			su.isHost = false;
@@ -176,6 +147,7 @@ public class SessionController extends Controller {
 	public Result editForm(long sessionId) {
 		Session session = Session.find.byId(sessionId);
 
+//		return ok(views.html.editForm.render(session, session.getHost()));
 		return ok(views.html.editForm.render(session, session.getHost()));
 	}
 

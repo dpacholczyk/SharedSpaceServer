@@ -55,7 +55,7 @@ public class StateController extends Controller {
 			nc.addExtraParam("action", "ACTIVITY");
 			nc.addExtraParam("color", colorData);
 
-			nc.sendNotification();
+			nc.sendNotification(sessionId);
 		}
 
 		return ok();
